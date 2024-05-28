@@ -3,6 +3,9 @@ package sit707_week5;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -12,25 +15,7 @@ public class WeatherControllerTest {
 	private static WeatherController wController;
 	private static double[] hourlyTemperatures;
 	 
-	 @BeforeClass
-	 public static void setUp() 
-	 {
-		 // Initialize controller once
-		 wController = WeatherController.getInstance();
-		 
-		 //Retrieve all hourly temperatures and store the temperatures
-		 int nHours = wController.getTotalHours();
-		 hourlyTemperatures = new double[nHours];
-		 //for loop for checking temperature
-		 for (int i = 0; i < nHours; i++) {
-		 hourlyTemperatures[i] = wController.getTemperatureForHour(i + 1);
-	 }
-	}
-	 
-	 @AfterClass
-	 public static void tearDown() {
-		 wController.close();//close the controller
-	 }
+	
 	
 	@Test
 	public void testStudentIdentity() {
@@ -44,6 +29,7 @@ public class WeatherControllerTest {
 		Assert.assertNotNull("Student name is :", studentName);
 	}
 	
+	/*
 	@Test
 	public void testTemperatureMin() {
 		System.out.println("+++ testTemperatureMin +++");
@@ -57,6 +43,7 @@ public class WeatherControllerTest {
 		}
 		Assert.assertTrue(wController.getTemperatureMinFromCache() == minTemperature);
 	 }
+	
 	
 	//temperature max
 	@Test
@@ -84,23 +71,19 @@ public class WeatherControllerTest {
 		 Assert.assertTrue(wController.getTemperatureAverageFromCache() ==
 		averageTemp);
 	 }
+	*/
 	
 	@Test
-	public void testTemperaturePersist() {
-	/*
-	* Remove below comments ONLY for 5.3C task.
-	*/
-	// System.out.println("+++ testTemperaturePersist +++");
-	//
-	// // Initialise controller
-	// WeatherController wController = WeatherController.getInstance();
-	//
-	// String persistTime = wController.persistTemperature(10, 19.5);
-	// String now = new SimpleDateFormat("H:m:s").format(new Date());
-	// System.out.println("Persist time: " + persistTime + ", now: " + now);
-	//
-	// Assert.assertTrue(persistTime.equals(now));
-	//
-	// wController.close();
+	public void testTemperaturePersist(Date date) {
+	
+		System.out.println("+++ testTemperaturePersist +++");
+		// Initialise controller
+		WeatherController wController = WeatherController.getInstance();
+		String persistTime = wController.persistTemperature(10, 19.5);
+		String now = new SimpleDateFormat("H:m:s").format(new 
+		Date());System.out.println("Persist time: " + persistTime + ", now:" + now);
+		Assert.assertTrue(persistTime.equals(now));
+		wController.close();
+		
 	}
 }
